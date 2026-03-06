@@ -3,7 +3,7 @@ x-common-config: &common-config
     context: .
     dockerfile: Dockerfile
   volumes:
-    - ~/.nanobot:/root/.nanobot
+    - ~/.nanobot:/app/.nanobot
 
 services:
   nanobot-gateway:
@@ -21,6 +21,10 @@ services:
         reservations:
           cpus: '0.25'
           memory: 256M
+    # kevinh
+    userns_mode: "keep-id"
+    security_opt:
+      - label=disable
   
   nanobot-cli:
     <<: *common-config
@@ -29,3 +33,7 @@ services:
     command: ["status"]
     stdin_open: true
     tty: true
+    # kevinh
+    userns_mode: "keep-id"
+    security_opt:
+      - label=disable
